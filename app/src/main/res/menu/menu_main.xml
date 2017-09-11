@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.rhardie.mypa.MainActivity">
+
+
+    <item
+        android:id="@+id/friendMenu"
+        android:orderInCategory="100"
+        android:title="Friends"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/todoMenu"
+        android:orderInCategory="120"
+        android:title="To-Do"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/eventMenu"
+        android:orderInCategory="120"
+        android:title="Events"
+        app:showAsAction="never" />
+
+</menu>

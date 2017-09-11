@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">My Personal Assistant</string>
+    <string name="title_activity_main2">To-Do</string>
+    <string name="title_activity_main3">Events</string>
+    <string name="title_activity_main4">Friends</string>
+
+    <string name="action_settings">Options</string>
+    <string name="title_activity_add_friend">Add a new friend</string>
+
+
+    <string-array name="gender">
+        <item>male</item>
+        <item>female</item>
+        <item>other</item>
+        <item>prefer not to say</item>
+    </string-array>
+
+    <string-array name="states">
+        <item>NSW</item>
+        <item>QLD</item>
+        <item>VIC</item>
+        <item>WA</item>
+        <item>SA</item>
+        <item>NT</item>
+        <item>ACT</item>
+    </string-array>
+    <string name="title_activity_add_event">AddEventActivity</string>
+
+
+</resources>
