@@ -1,11 +1,18 @@
 package com.example.rhardie.mypa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class MainFriendActivity extends BaseActivity {
@@ -39,12 +46,12 @@ public class MainFriendActivity extends BaseActivity {
     }
 
     public void showRec() {
-
-        ArrayList<String> tableContent = db.retrieveFriends();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, tableContent);
-
-        lv.setAdapter(adapter);
-
+        lv.setAdapter(db.retrieveFriends(this));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainFriendActivity.this, "" + id, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
