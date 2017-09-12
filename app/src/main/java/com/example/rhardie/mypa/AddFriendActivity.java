@@ -63,10 +63,10 @@ public class AddFriendActivity extends AppCompatActivity {
         String lname = lnameIn.getText().toString();
         String tempyear = ageIn.getText().toString();
         int age = Integer.parseInt(tempyear);
-        String gender = genderIn.toString();
-        String address = addressIn.toString();
-        String suburb = suburbIn.toString();
-        String state = stateIn.toString();
+        String gender = genderIn.getSelectedItem().toString();
+        String address = addressIn.getText().toString();
+        String suburb = suburbIn.getText().toString();
+        String state = stateIn.getSelectedItem().toString();
 
         db.addFriend(fname, lname, gender, age, address, suburb, state);
 
