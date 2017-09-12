@@ -12,6 +12,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.sql.RowId;
 import java.util.ArrayList;
 
 public class DatabaseManager {
@@ -103,11 +105,19 @@ public class DatabaseManager {
 
     public ArrayList<String> retrieveFriends() {
         ArrayList<String> friendsRows = new ArrayList<String>();
-        String[] columns = new String[] {"firstName", "lastName", "gender", "age", "address", "suburb", "state"};
+        String[] columns = new String[] {"firstName", "lastName",
+                //"gender", "age", "address", "suburb", "state",
+                "ROWID"};
         Cursor cursor = db.query("FRIENDS", columns, null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            friendsRows.add(cursor.getString(0) + ", " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + Integer.toString(cursor.getInt(3)) + ", " + cursor.getString(4)  + ", " + cursor.getString(5) + ", " + cursor.getString(6));
+            friendsRows.add(
+                    cursor.getInt   (cursor.getColumnIndex("rowid")) + ": " +
+                    cursor.getString(cursor.getColumnIndex("firstName")) + " "  +
+                    cursor.getString(cursor.getColumnIndex("lastName"))
+                   // + "/n" + cursor.getString(2) + ", " + Integer.toString(cursor.getInt(3))
+                    // + ", " + cursor.getString(4)  + ", " + cursor.getString(5) + ", " + cursor.getString(6)
+                    );
             cursor.moveToNext();
         }
         if (cursor != null && !cursor.isClosed()) {
