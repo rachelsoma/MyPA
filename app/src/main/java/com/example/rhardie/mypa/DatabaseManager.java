@@ -18,7 +18,7 @@ public class DatabaseManager {
 
     //create database
     public static final String DB_NAME = "DB_Assignment1";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     //create tables
     private static final String CREATE_FRIENDS_TABLE
@@ -30,7 +30,7 @@ public class DatabaseManager {
     private static final String CREATE_TODO_TABLE
             = "CREATE TABLE TODO"
             + " (todoName TEXT, complete BOOL, dateAdded DATETIME, todoNotes TEXT);";
-    //populate tables
+
 
     public SQLiteDatabase db;
 
@@ -55,18 +55,27 @@ public class DatabaseManager {
             db.execSQL(CREATE_EVENT_TABLE);
             db.execSQL(CREATE_FRIENDS_TABLE);
             db.execSQL(CREATE_TODO_TABLE);
+            addTestData(db);
+        }
+
+        private void addTestData(SQLiteDatabase db) {
+            addFriend("Joe","Jones","male",29,"20 Rance Rd","Penrith","NSW", db);
+            addFriend("Adam","Kinnell","male",22,"Somewhere","Penrith","NSW", db);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w("Friends table", "Upgrading database i.e. dropping table and re-creating it");
+            db.execSQL("DROP TABLE IF EXISTS EVENTS");
             db.execSQL("DROP TABLE IF EXISTS FRIENDS");
+            db.execSQL("DROP TABLE IF EXISTS TODO");
             onCreate(db);
         }
     }
 
-    public boolean addFriend(String fn, String ln, int age, String g, String addr, String suburb, String state) {
-        synchronized(this.db) {
+    private boolean addFriend(String fn, String ln,String g, int age, String addr, String suburb, String state,
+                              SQLiteDatabase db) {
+        synchronized(db) {
 
             ContentValues newEntry = new ContentValues();
 
@@ -88,13 +97,17 @@ public class DatabaseManager {
         }
     }
 
+    public boolean addFriend(String fn, String ln, String g, int age, String addr, String suburb, String state) {
+        return addFriend(fn, ln, g, age, addr, suburb, state, this.db);
+    }
+
     public ArrayList<String> retrieveFriends() {
         ArrayList<String> friendsRows = new ArrayList<String>();
         String[] columns = new String[] {"firstName", "lastName", "gender", "age", "address", "suburb", "state"};
         Cursor cursor = db.query("FRIENDS", columns, null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            friendsRows.add(cursor.getString(0) + ", " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + cursor.getInt(3) + ", " + cursor.getString(4)  + ", " + cursor.getString(5) + ", " + cursor.getString(6));
+            friendsRows.add(cursor.getString(0) + ", " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + Integer.toString(cursor.getInt(3)) + ", " + cursor.getString(4)  + ", " + cursor.getString(5) + ", " + cursor.getString(6));
             cursor.moveToNext();
         }
         if (cursor != null && !cursor.isClosed()) {

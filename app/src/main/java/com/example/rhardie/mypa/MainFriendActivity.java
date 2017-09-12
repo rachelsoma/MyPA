@@ -15,6 +15,7 @@ public class MainFriendActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_friend);
@@ -27,21 +28,23 @@ public class MainFriendActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(MainFriendActivity.this, AddFriendActivity.class);
                 startActivity(intent);
             }
         });
 
-        //showRec();
+        //test data into table
+        showRec();
     }
 
-    public boolean showRec(ListView lv) {
+    public void showRec() {
+
         ArrayList<String> tableContent = db.retrieveFriends();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, tableContent);
 
         lv.setAdapter(adapter);
 
-        return true;
     }
 }

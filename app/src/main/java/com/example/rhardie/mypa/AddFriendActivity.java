@@ -68,7 +68,7 @@ public class AddFriendActivity extends AppCompatActivity {
         String suburb = suburbIn.toString();
         String state = stateIn.toString();
 
-        db.addFriend(fname, lname, age, gender, address, suburb, state);
+        db.addFriend(fname, lname, gender, age, address, suburb, state);
 
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 

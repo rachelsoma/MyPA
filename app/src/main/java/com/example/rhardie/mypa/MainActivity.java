@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Snackbar.make(view, "Fab!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -60,9 +61,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
                 startActivity(intent);
             }
         });
-
     }
-
 
     @Override
     public void onClick(View v) {
