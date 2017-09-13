@@ -1,24 +1,18 @@
 package com.example.rhardie.mypa;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class MainFriendActivity extends BaseActivity {
 
     DatabaseManager db;
     ListView lv;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +37,44 @@ public class MainFriendActivity extends BaseActivity {
 
         //test data into table
         showRec();
+
     }
 
     public void showRec() {
         lv.setAdapter(db.retrieveFriends(this));
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainFriendActivity.this, "" + id, Toast.LENGTH_LONG).show();
+                Cursor cursor = (Cursor) lv.getItemAtPosition(position);
+                Intent intentFriend = new Intent(MainFriendActivity.this, ViewFriendActivity.class);
+
+
+                        cursor.getString((cursor.getColumnIndex("gender")));
+                String friendName =
+                        cursor.getString(cursor.getColumnIndex("firstName")) + " " +
+                                cursor.getString(cursor.getColumnIndex("lastName"));
+                String friendGender =
+                        cursor.getString((cursor.getColumnIndex("gender")));
+                String friendAge =
+                        cursor.getString((cursor.getColumnIndex("age")));
+                String friendAddress =
+                        cursor.getString((cursor.getColumnIndex("address")));
+                String friendSuburb =
+                        cursor.getString((cursor.getColumnIndex("suburb")));
+                String friendState =
+                        cursor.getString((cursor.getColumnIndex("state")));
+
+
+                intentFriend.putExtra("friendPosition", ( cursor.getLong(cursor.getColumnIndex("_id"))));
+
+                intentFriend.putExtra("extraName",friendName);
+                intentFriend.putExtra("gender",friendGender);
+                intentFriend.putExtra("age",friendAge);
+                intentFriend.putExtra("address",friendAddress);
+                intentFriend.putExtra("suburb",friendSuburb);
+                intentFriend.putExtra("state",friendState);
+                startActivity(intentFriend);
             }
         });
     }

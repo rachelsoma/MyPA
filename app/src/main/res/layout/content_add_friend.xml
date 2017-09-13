@@ -39,7 +39,7 @@
         android:layout_marginBottom="32dp" />
 
     <EditText
-        android:id="@+id/fName"
+        android:id="@+id/tvFullName"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -59,13 +59,13 @@
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/fName"
+        app:layout_constraintTop_toBottomOf="@+id/tvFullName"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
 
     <Spinner
-        android:id="@+id/genderSpinner"
+        android:id="@+id/tvGender"
         android:layout_width="345dp"
         android:layout_height="33dp"
         android:layout_marginLeft="8dp"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lName" />
 
     <EditText
-        android:id="@+id/age"
+        android:id="@+id/tvAge"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -88,10 +88,10 @@
         android:inputType="number"
         android:maxLength="3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGender" />
 
     <EditText
-        android:id="@+id/address"
+        android:id="@+id/tvAddress"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -101,17 +101,17 @@
         android:hint="Street Address"
         android:inputType="textPostalAddress"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 
     <EditText
-        android:id="@+id/suburb"
+        android:id="@+id/tvSuburb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Suburb"
         android:inputType="textPostalAddress"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddress"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
@@ -125,7 +125,7 @@
         android:tint="@android:color/black"
         app:srcCompat="@android:drawable/ic_menu_upload"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/suburb"
+        app:layout_constraintTop_toBottomOf="@+id/tvSuburb"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
@@ -141,7 +141,7 @@
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="18dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/suburb" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSuburb" />
 
     <Spinner
         android:id="@+id/stateSpinner"
@@ -151,9 +151,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintLeft_toRightOf="@+id/suburb"
+        app:layout_constraintLeft_toRightOf="@+id/tvSuburb"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddress"
         android:entries="@array/states"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"

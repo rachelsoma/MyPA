@@ -49,6 +49,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.rhardie.mypa.MainEventActivity" />
         </activity>
+        <activity
+            android:name=".ViewFriendActivity"
+            android:label="@string/title_activity_view_friend"
+            android:parentActivityName=".MainFriendActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rhardie.mypa.MainFriendActivity" />
+        </activity>
     </application>
 
 </manifest>

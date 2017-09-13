@@ -25,6 +25,7 @@
         <item>ACT</item>
     </string-array>
     <string name="title_activity_add_event">AddEventActivity</string>
+    <string name="title_activity_view_friend">ViewFriendActivity</string>
 
 
 </resources>

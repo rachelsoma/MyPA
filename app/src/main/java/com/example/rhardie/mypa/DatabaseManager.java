@@ -111,7 +111,7 @@ public class DatabaseManager {
     public CursorAdapter retrieveFriends(Context context) {
         ArrayList<String> friendsRows = new ArrayList<String>();
         String[] columns = new String[] {"firstName", "lastName",
-                //"gender", "age", "address", "suburb", "state",
+                "gender", "age", "address", "suburb", "state",
                 "ROWID AS _id"};
         Cursor cursor = db.query("FRIENDS", columns, null, null, null, null, null);
         cursor.moveToFirst();
@@ -128,6 +128,58 @@ public class DatabaseManager {
                         cursor.getString(cursor.getColumnIndex("lastName"));
                 TextView name = (TextView) view ;
                 name.setText(friendName);
+                String friendID =
+                        cursor.getString(cursor.getColumnIndex("_id"));
+                String gender =
+                        cursor.getString(cursor.getColumnIndex("gender"));
+                String age =
+                        cursor.getString(cursor.getColumnIndex("age"));
+                String address =
+                        cursor.getString(cursor.getColumnIndex("address"));
+                String suburb =
+                        cursor.getString(cursor.getColumnIndex("suburb"));
+                String state =
+                        cursor.getString(cursor.getColumnIndex("state"));
+
+
+            }
+
+        };
+
+        return new FriendsCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, 0);
+    }
+
+    public CursorAdapter retrieveFriends(Context context, int friendID) {
+        String fID = String.valueOf(friendID);
+        ArrayList<String> friendsRows = new ArrayList<String>();
+        String[] columns = new String[] {"firstName", "lastName",
+                "gender", "age", "address", "suburb", "state",
+                "ROWID AS _id"};
+        Cursor cursor = db.query("FRIENDS", columns, fID, null, null, null, null);
+        cursor.moveToFirst();
+
+        class FriendsCursorAdapter extends ResourceCursorAdapter {
+
+            public FriendsCursorAdapter(Context context, int layout, Cursor cursor, int flags) {
+                super(context, layout, cursor, flags);
+            }
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                String friendName =
+                        cursor.getString(cursor.getColumnIndex("firstName")) + " " +
+                                cursor.getString(cursor.getColumnIndex("lastName"));
+                TextView fullName = (TextView) view ;
+                fullName.setText(friendName);
+                String gender =
+                        cursor.getString((cursor.getColumnIndex("gender")));
+                String age =
+                        cursor.getString((cursor.getColumnIndex("age")));
+                String address =
+                        cursor.getString((cursor.getColumnIndex("address")));
+                String suburb =
+                        cursor.getString((cursor.getColumnIndex("suburb")));
+                String state =
+                        cursor.getString((cursor.getColumnIndex("state")));
             }
 
         };
