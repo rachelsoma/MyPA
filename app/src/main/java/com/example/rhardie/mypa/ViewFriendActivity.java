@@ -1,6 +1,7 @@
 package com.example.rhardie.mypa;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.R.attr.value;
 
@@ -20,6 +22,7 @@ public class ViewFriendActivity extends MainFriendActivity {
     String suburb;
     String state;
     long friendPosition;
+    String rowID;
 
 
     @Override
@@ -34,7 +37,7 @@ public class ViewFriendActivity extends MainFriendActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Edit " + friendPosition, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Edit " + rowID, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -43,8 +46,10 @@ public class ViewFriendActivity extends MainFriendActivity {
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Delete " + friendPosition, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(getApplicationContext(), fullName + " deleted", Toast.LENGTH_LONG).show();
+                db.deleteFriend(rowID);
+                Intent back = new Intent(ViewFriendActivity.this, MainFriendActivity.class);
+                startActivity(back);
             }
         });
 
@@ -77,6 +82,7 @@ public class ViewFriendActivity extends MainFriendActivity {
         suburb = extras.getString("suburb");
         state = extras.getString("state");
         friendPosition = extras.getLong("friendPosition");
+        rowID = Long.toString(friendPosition);
 
         //The key argument here must match that used in the other activity
 

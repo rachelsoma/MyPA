@@ -26,10 +26,11 @@ public class DatabaseManager {
     //create database
     public static final String DB_NAME = "DB_Assignment1";
     public static final int DB_VERSION = 2;
+    public static final String TB_FRIENDS = "FRIENDS";
 
     //create tables
     private static final String CREATE_FRIENDS_TABLE
-            = "CREATE TABLE FRIENDS"
+            = "CREATE TABLE " + TB_FRIENDS
             + " (firstName TEXT, lastName TEXT, gender TEXT, age INT, address TEXT, suburb TEXT, state TEXT);";
     private static final String CREATE_EVENT_TABLE
             = "CREATE TABLE EVENTS"
@@ -185,6 +186,10 @@ public class DatabaseManager {
         };
 
         return new FriendsCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, 0);
+    }
+
+    public void deleteFriend(String idRow){
+        db.execSQL("DELETE FROM " + TB_FRIENDS + " WHERE " + "ROWID" + "='" + idRow + "'");
     }
 
     public void clearFriends()
