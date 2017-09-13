@@ -63,7 +63,7 @@ public class AddFriendActivity extends AppCompatActivity {
         String address = addressIn.getText().toString();
         String suburb = suburbIn.getText().toString();
         String state = stateIn.getSelectedItem().toString();
-
+        //todo: Validate data before adding to database
         db.addFriend(fname, lname, gender, age, address, suburb, state);
 
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();

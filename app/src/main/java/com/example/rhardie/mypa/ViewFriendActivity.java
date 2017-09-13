@@ -9,7 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.lang.reflect.Method;
 
 import static android.R.attr.value;
 
@@ -22,7 +23,7 @@ public class ViewFriendActivity extends MainFriendActivity {
     String suburb;
     String state;
     long friendPosition;
-    String rowID;
+    String rowId;
 
 
     @Override
@@ -37,7 +38,8 @@ public class ViewFriendActivity extends MainFriendActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Edit " + rowID, Snackbar.LENGTH_LONG)
+                //todo: write this whole damn function to edit a record
+                Snackbar.make(view, "Edit " + rowId, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -46,8 +48,10 @@ public class ViewFriendActivity extends MainFriendActivity {
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), fullName + " deleted", Toast.LENGTH_LONG).show();
-                db.deleteFriend(rowID);
+                //Todo: Add alert to confirm delete
+                Snackbar.make(view, "Delete " + fullName, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                db.deleteFriend(rowId);
                 Intent back = new Intent(ViewFriendActivity.this, MainFriendActivity.class);
                 startActivity(back);
             }
@@ -55,24 +59,25 @@ public class ViewFriendActivity extends MainFriendActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Calls method to get info from intent
         getFriendFromIntent();
 
-        TextView tvName = (TextView)findViewById(R.id.tvFullName);
+        //passed info goes into text views
+        TextView tvName = (TextView) findViewById(R.id.tvFullName);
         tvName.setText(fullName);
-        TextView tvGender = (TextView)findViewById(R.id.tvGender);
+        TextView tvGender = (TextView) findViewById(R.id.tvGender);
         tvGender.setText(gender);
-        TextView tvAge = (TextView)findViewById(R.id.tvAge);
+        TextView tvAge = (TextView) findViewById(R.id.tvAge);
         tvAge.setText(age);
-        TextView tvAddress = (TextView)findViewById(R.id.tvAddress);
+        TextView tvAddress = (TextView) findViewById(R.id.tvAddress);
         tvAddress.setText(address);
-        TextView tvSuburb = (TextView)findViewById(R.id.tvSuburb);
-        tvName.setText(suburb);
-        TextView tvState = (TextView)findViewById(R.id.tvState);
-        tvName.setText(state);
-
-
+        TextView tvSuburb = (TextView) findViewById(R.id.tvSuburb);
+        tvSuburb.setText(suburb);
+        TextView tvState = (TextView) findViewById(R.id.tvState);
+        tvState.setText(state);
     }
 
+    //Method to extract info passed to new activity and assign it to new variables
     public void getFriendFromIntent() {
         Bundle extras = getIntent().getExtras();
         fullName = extras.getString("extraName");
@@ -82,13 +87,7 @@ public class ViewFriendActivity extends MainFriendActivity {
         suburb = extras.getString("suburb");
         state = extras.getString("state");
         friendPosition = extras.getLong("friendPosition");
-        rowID = Long.toString(friendPosition);
-
-        //The key argument here must match that used in the other activity
-
-
-
-
-
+        rowId = String.valueOf(friendPosition);
+        //The key argument here must match the ones used in the activity intent came from
     }
 }
