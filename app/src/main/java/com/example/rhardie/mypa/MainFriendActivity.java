@@ -42,15 +42,13 @@ public class MainFriendActivity extends BaseActivity {
 
     public void showRec() {
         lv.setAdapter(db.retrieveFriends(this));
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) lv.getItemAtPosition(position);
                 Intent intentFriend = new Intent(MainFriendActivity.this, ViewFriendActivity.class);
 
-
-                        cursor.getString((cursor.getColumnIndex("gender")));
+                cursor.getString((cursor.getColumnIndex("gender")));
                 String friendName =
                         cursor.getString(cursor.getColumnIndex("firstName")) + " " +
                                 cursor.getString(cursor.getColumnIndex("lastName"));
@@ -65,15 +63,13 @@ public class MainFriendActivity extends BaseActivity {
                 String friendState =
                         cursor.getString((cursor.getColumnIndex("state")));
 
-
-                intentFriend.putExtra("friendPosition", ( cursor.getLong(cursor.getColumnIndex("_id"))));
-
-                intentFriend.putExtra("extraName",friendName);
-                intentFriend.putExtra("gender",friendGender);
-                intentFriend.putExtra("age",friendAge);
-                intentFriend.putExtra("address",friendAddress);
-                intentFriend.putExtra("suburb",friendSuburb);
-                intentFriend.putExtra("state",friendState);
+                intentFriend.putExtra("friendPosition", (cursor.getLong(cursor.getColumnIndex("_id"))));
+                intentFriend.putExtra("extraName", friendName);
+                intentFriend.putExtra("gender", friendGender);
+                intentFriend.putExtra("age", friendAge);
+                intentFriend.putExtra("address", friendAddress);
+                intentFriend.putExtra("suburb", friendSuburb);
+                intentFriend.putExtra("state", friendState);
                 startActivity(intentFriend);
             }
         });

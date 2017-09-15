@@ -13,30 +13,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class DatabaseManager {
 
     //create database
     public static final String DB_NAME = "DB_Assignment1";
-    public static final int DB_VERSION = 2;
-    public static final String TB_FRIENDS = "FRIENDS";
-    public static final String TB_EVENTS = "EVENTS";
+    public static final int DB_VERSION = 4;
 
-    //create tables
-    private static final String CREATE_FRIENDS_TABLE
-            = "CREATE TABLE FRIENDS"
-            + " (firstName TEXT, lastName TEXT, gender TEXT, age INT, address TEXT, suburb TEXT, state TEXT);";
-    private static final String CREATE_EVENT_TABLE
-            = "CREATE TABLE EVENTS"
-            + " (eventName TEXT, upcoming BOOL, eventDate DATETIME, addressEvent TEXT);";
-    private static final String CREATE_TODO_TABLE
-            = "CREATE TABLE TODO"
-            + " (todoName TEXT, complete BOOL, dateAdded DATETIME, todoNotes TEXT);";
+
 
 
     public SQLiteDatabase db;
@@ -59,23 +48,24 @@ public class DatabaseManager {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_EVENT_TABLE);
-            db.execSQL(CREATE_FRIENDS_TABLE);
-            db.execSQL(CREATE_TODO_TABLE);
+            db.execSQL(TableManager.CREATE_EVENT_TABLE);
+            db.execSQL(TableManager.CREATE_FRIENDS_TABLE);
+            db.execSQL(TableManager.CREATE_TODO_TABLE);
             addTestData(db);
         }
 
         private void addTestData(SQLiteDatabase db) {
             addFriend("Joe", "Jones", "male", 29, "20 Rance Rd", "Werrington", "NSW", db);
             addFriend("Adam", "Kinnell", "male", 22, "Somewhere", "Penrith", "NSW", db);
+            addTodo("Mop floor","Home",db);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w("Friends table", "Upgrading database i.e. dropping table and re-creating it");
-            db.execSQL("DROP TABLE IF EXISTS EVENTS");
-            db.execSQL("DROP TABLE IF EXISTS " + TB_FRIENDS);
-            db.execSQL("DROP TABLE IF EXISTS TODO");
+            db.execSQL("DROP TABLE IF EXISTS " + TableManager.TB_EVENTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TableManager.TB_FRIENDS);
+            db.execSQL("DROP TABLE IF EXISTS " + TableManager.TB_TODO);
             onCreate(db);
         }
     }
@@ -94,7 +84,28 @@ public class DatabaseManager {
             newEntry.put("suburb", suburb);
             newEntry.put("state", state);
             try {
-                db.insertOrThrow(TB_FRIENDS, null, newEntry);
+                db.insertOrThrow(TableManager.TB_FRIENDS, null, newEntry);
+            } catch (Exception e) {
+                Log.e("Error in inserting rows", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+    }
+
+    private boolean addTodo(String name, String location,
+                            SQLiteDatabase db) {
+        synchronized (db) {
+
+            ContentValues newEntry = new ContentValues();
+
+            newEntry.put(TableManager.TODO_COL_NAME, name);
+            newEntry.put(TableManager.TODO_COL_LOCATION, location);
+            newEntry.put(TableManager.TODO_COL_COMPLETE, 0);
+
+            try {
+                db.insertOrThrow(TableManager.TB_TODO, null, newEntry);
             } catch (Exception e) {
                 Log.e("Error in inserting rows", e.toString());
                 e.printStackTrace();
@@ -109,12 +120,17 @@ public class DatabaseManager {
         return addFriend(fn, ln, g, age, addr, suburb, state, this.db);
     }
 
+    public boolean addTodo
+            (String name, String location) {
+        return addTodo(name, location, this.db);
+    }
+
     public CursorAdapter retrieveFriends(Context context) {
         ArrayList<String> friendsRows = new ArrayList<String>();
         String[] columns = new String[]{"firstName", "lastName",
                 "gender", "age", "address", "suburb", "state",
                 "ROWID AS _id"};
-        Cursor cursor = db.query(TB_FRIENDS, columns, null, null, null, null, null);
+        Cursor cursor = db.query(TableManager.TB_FRIENDS, columns, null, null, null, null, null);
         cursor.moveToFirst();
 
         class FriendsCursorAdapter extends ResourceCursorAdapter {
@@ -156,7 +172,7 @@ public class DatabaseManager {
         String[] columns = new String[]{"firstName", "lastName",
                 "gender", "age", "address", "suburb", "state",
                 "ROWID AS _id"};
-        Cursor cursor = db.query(TB_FRIENDS, columns, fID, null, null, null, null);
+        Cursor cursor = db.query(TableManager.TB_FRIENDS, columns, fID, null, null, null, null);
         cursor.moveToFirst();
 
         class FriendsCursorAdapter extends ResourceCursorAdapter {
@@ -190,20 +206,96 @@ public class DatabaseManager {
         return new FriendsCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, 0);
     }
 
+    public CursorAdapter retrieveTodo(Context context) {
+        ArrayList<String> todoRows = new ArrayList<String>();
+        String[] columns = new String[]{TableManager.TODO_COL_NAME, TableManager.TODO_COL_LOCATION, TableManager.TODO_COL_COMPLETE,
+                "ROWID AS _id"};
+        Cursor cursor = db.query(TableManager.TB_TODO, columns, null, null, null, null, null);
+        cursor.moveToFirst();
+
+        class TodoCursorAdapter extends ResourceCursorAdapter {
+
+            public TodoCursorAdapter(Context context, int layout, Cursor cursor, int flags) {
+                super(context, layout, cursor, flags);
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                String todoName =
+                        cursor.getString(cursor.getColumnIndex(TableManager.TODO_COL_NAME));
+                TextView name = (TextView) view;
+                name.setText(todoName);
+                String todoID =
+                        cursor.getString(cursor.getColumnIndex("_id"));
+                String todoLocation =
+                        cursor.getString(cursor.getColumnIndex(TableManager.TODO_COL_LOCATION));
+                String complete =
+                        cursor.getString(cursor.getColumnIndex(TableManager.TODO_COL_COMPLETE));
+            }
+
+        }
+        ;
+
+        return new TodoCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, 0);
+    }
+
+    public CursorAdapter retrieveTodo(Context context, int complete) {
+         ArrayList<String> todoRows = new ArrayList<String>();
+
+        String[] columns = new String[]{TableManager.TODO_COL_NAME, TableManager.TODO_COL_LOCATION, TableManager.TODO_COL_COMPLETE,
+                "ROWID AS _id"};
+        Cursor cursor = db.query(TableManager.TB_TODO, columns,TableManager.TODO_COL_COMPLETE + " = " + complete, null, null, null, null);
+        cursor.moveToFirst();
+
+        class TodoCursorAdapter extends ResourceCursorAdapter {
+
+            public TodoCursorAdapter(Context context, int layout, Cursor cursor, int flags) {
+                super(context, layout, cursor, flags);
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                String todoName =
+                        cursor.getString(cursor.getColumnIndex(TableManager.TODO_COL_NAME));
+                TextView name = (TextView) view;
+                name.setText(todoName);
+                String todoID =
+                        cursor.getString(cursor.getColumnIndex("_id"));
+                String todoLocation =
+                        cursor.getString(cursor.getColumnIndex(TableManager.TODO_COL_LOCATION));
+                int complete =
+                        cursor.getInt(cursor.getColumnIndex(TableManager.TODO_COL_COMPLETE));
+            }
+        }
+        ;
+
+        return new TodoCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, 0);
+    }
+
+    public void toggleTodo(long idRow, int complete) {
+        ContentValues toggle = new ContentValues();
+        if (complete == 0) { //0 is equal false
+            toggle.put(TableManager.TODO_COL_COMPLETE, 1);
+        } else {
+            toggle.put(TableManager.TODO_COL_COMPLETE,0 );
+        }
+        db.update(TableManager.TB_TODO,toggle, "rowid =" +idRow,null);
+    }
+
     public void deleteFriend(String idRow) {
-        db.execSQL("DELETE FROM " + TB_FRIENDS + " WHERE " + "ROWID" + "='" + idRow + "'");
+        db.execSQL("DELETE FROM " + TableManager.TB_FRIENDS + " WHERE " + "ROWID" + "='" + idRow + "'");
     }
 
     public void clearFriends() {
-        db.delete(TB_FRIENDS, null, null);
+        db.delete(TableManager.TB_FRIENDS, null, null);
     }
 
     public void clearEvents() {
-        db.delete(TB_EVENTS, null, null);
+        db.delete(TableManager.TB_EVENTS, null, null);
     }
 
     public void clearTodo() {
-        db.delete("TODO", null, null);
+        db.delete(TableManager.TB_TODO, null, null);
     }
 }
 

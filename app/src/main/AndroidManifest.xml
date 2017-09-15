@@ -41,6 +41,15 @@
                 android:value="com.example.rhardie.mypa.MainFriendActivity" />
         </activity>
         <activity
+            android:name=".AddTodoActivity"
+            android:label="Add a new item"
+            android:parentActivityName=".MainTodoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rhardie.mypa.MainTodoActivity" />
+        </activity>
+        <activity
             android:name=".AddEventActivity"
             android:label="@string/title_activity_add_event"
             android:parentActivityName=".MainEventActivity"
