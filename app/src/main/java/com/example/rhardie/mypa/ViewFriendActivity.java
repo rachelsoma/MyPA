@@ -18,10 +18,12 @@ public class ViewFriendActivity extends MainFriendActivity {
 
     String fullName;
     String gender;
+    int genderPosition;
     String age;
     String address;
     String suburb;
     String state;
+    int statePosition;
     long friendPosition;
     String rowId;
 
@@ -39,8 +41,12 @@ public class ViewFriendActivity extends MainFriendActivity {
             @Override
             public void onClick(View view) {
                 //todo: write this whole damn function to edit a record
+               // Intent intent = (Intent)
                 Snackbar.make(view, "Edit " + rowId, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent edit = new Intent(ViewFriendActivity.this, EditFriendActivity.class);
+                edit.putExtras(getIntent().getExtras());
+                startActivity(edit);
             }
         });
 
@@ -82,12 +88,16 @@ public class ViewFriendActivity extends MainFriendActivity {
         Bundle extras = getIntent().getExtras();
         fullName = extras.getString("extraName");
         gender = extras.getString("gender");
+        genderPosition = extras.getInt("gender",gender.indexOf(gender));
         age = extras.getString("age");
         address = extras.getString("address");
         suburb = extras.getString("suburb");
         state = extras.getString("state");
+        statePosition = extras.getInt("state",state.indexOf(state));
         friendPosition = extras.getLong("friendPosition");
         rowId = String.valueOf(friendPosition);
         //The key argument here must match the ones used in the activity intent came from
+
+
     }
 }

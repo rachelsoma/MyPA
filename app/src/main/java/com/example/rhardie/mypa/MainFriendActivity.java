@@ -49,9 +49,10 @@ public class MainFriendActivity extends BaseActivity {
                 Intent intentFriend = new Intent(MainFriendActivity.this, ViewFriendActivity.class);
 
                 cursor.getString((cursor.getColumnIndex("gender")));
+                String firstName = cursor.getString(cursor.getColumnIndex("firstName"));
+                String lastName = cursor.getString(cursor.getColumnIndex("lastName"));
                 String friendName =
-                        cursor.getString(cursor.getColumnIndex("firstName")) + " " +
-                                cursor.getString(cursor.getColumnIndex("lastName"));
+                         firstName + " " + lastName;
                 String friendGender =
                         cursor.getString((cursor.getColumnIndex("gender")));
                 String friendAge =
@@ -65,6 +66,8 @@ public class MainFriendActivity extends BaseActivity {
 
                 intentFriend.putExtra("friendPosition", (cursor.getLong(cursor.getColumnIndex("_id"))));
                 intentFriend.putExtra("extraName", friendName);
+                intentFriend.putExtra("extraFname",firstName);
+                intentFriend.putExtra("extraLname",lastName);
                 intentFriend.putExtra("gender", friendGender);
                 intentFriend.putExtra("age", friendAge);
                 intentFriend.putExtra("address", friendAddress);

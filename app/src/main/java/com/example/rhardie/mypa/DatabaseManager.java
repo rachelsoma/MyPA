@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.CursorAdapter;
@@ -24,8 +25,6 @@ public class DatabaseManager {
     //create database
     public static final String DB_NAME = "DB_Assignment1";
     public static final int DB_VERSION = 4;
-
-
 
 
     public SQLiteDatabase db;
@@ -57,7 +56,7 @@ public class DatabaseManager {
         private void addTestData(SQLiteDatabase db) {
             addFriend("Joe", "Jones", "male", 29, "20 Rance Rd", "Werrington", "NSW", db);
             addFriend("Adam", "Kinnell", "male", 22, "Somewhere", "Penrith", "NSW", db);
-            addTodo("Mop floor","Home",db);
+            addTodo("Mop floor", "Home", db);
         }
 
         @Override
@@ -76,13 +75,13 @@ public class DatabaseManager {
 
             ContentValues newEntry = new ContentValues();
 
-            newEntry.put("firstName", fn);
-            newEntry.put("lastName", ln);
-            newEntry.put("gender", g);
-            newEntry.put("age", age);
-            newEntry.put("address", addr);
-            newEntry.put("suburb", suburb);
-            newEntry.put("state", state);
+            newEntry.put(TableManager.FRIEND_COL_FNAME, fn);
+            newEntry.put(TableManager.FRIEND_COL_LNAME, ln);
+            newEntry.put(TableManager.FRIEND_COL_GENDER, g);
+            newEntry.put(TableManager.FRIEND_COL_AGE, age);
+            newEntry.put(TableManager.FRIEND_COL_ADDRESS, addr);
+            newEntry.put(TableManager.FRIEND_COL_SUBURB, suburb);
+            newEntry.put(TableManager.FRIEND_COL_STATE, state);
             try {
                 db.insertOrThrow(TableManager.TB_FRIENDS, null, newEntry);
             } catch (Exception e) {
@@ -127,8 +126,14 @@ public class DatabaseManager {
 
     public CursorAdapter retrieveFriends(Context context) {
         ArrayList<String> friendsRows = new ArrayList<String>();
-        String[] columns = new String[]{"firstName", "lastName",
-                "gender", "age", "address", "suburb", "state",
+        String[] columns = new String[]{
+                TableManager.FRIEND_COL_FNAME,
+                TableManager.FRIEND_COL_LNAME,
+                TableManager.FRIEND_COL_GENDER,
+                TableManager.FRIEND_COL_AGE,
+                TableManager.FRIEND_COL_ADDRESS,
+                TableManager.FRIEND_COL_SUBURB,
+                TableManager.FRIEND_COL_STATE,
                 "ROWID AS _id"};
         Cursor cursor = db.query(TableManager.TB_FRIENDS, columns, null, null, null, null, null);
         cursor.moveToFirst();
@@ -142,22 +147,22 @@ public class DatabaseManager {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
                 String friendName =
-                        cursor.getString(cursor.getColumnIndex("firstName")) + " " +
-                                cursor.getString(cursor.getColumnIndex("lastName"));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_FNAME)) + " " +
+                                cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_LNAME));
                 TextView name = (TextView) view;
                 name.setText(friendName);
                 String friendID =
                         cursor.getString(cursor.getColumnIndex("_id"));
                 String gender =
-                        cursor.getString(cursor.getColumnIndex("gender"));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_GENDER));
                 String age =
-                        cursor.getString(cursor.getColumnIndex("age"));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_AGE));
                 String address =
-                        cursor.getString(cursor.getColumnIndex("address"));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_ADDRESS));
                 String suburb =
-                        cursor.getString(cursor.getColumnIndex("suburb"));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_SUBURB));
                 String state =
-                        cursor.getString(cursor.getColumnIndex("state"));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_STATE));
             }
 
         }
@@ -169,8 +174,14 @@ public class DatabaseManager {
     public CursorAdapter retrieveFriends(Context context, int friendID) {
         String fID = String.valueOf(friendID);
         ArrayList<String> friendsRows = new ArrayList<String>();
-        String[] columns = new String[]{"firstName", "lastName",
-                "gender", "age", "address", "suburb", "state",
+        String[] columns = new String[]{
+                TableManager.FRIEND_COL_FNAME,
+                TableManager.FRIEND_COL_LNAME,
+                TableManager.FRIEND_COL_GENDER,
+                TableManager.FRIEND_COL_AGE,
+                TableManager.FRIEND_COL_ADDRESS,
+                TableManager.FRIEND_COL_SUBURB,
+                TableManager.FRIEND_COL_STATE,
                 "ROWID AS _id"};
         Cursor cursor = db.query(TableManager.TB_FRIENDS, columns, fID, null, null, null, null);
         cursor.moveToFirst();
@@ -184,20 +195,22 @@ public class DatabaseManager {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
                 String friendName =
-                        cursor.getString(cursor.getColumnIndex("firstName")) + " " +
-                                cursor.getString(cursor.getColumnIndex("lastName"));
-                TextView fullName = (TextView) view;
-                fullName.setText(friendName);
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_FNAME)) + " " +
+                                cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_LNAME));
+                TextView name = (TextView) view;
+                name.setText(friendName);
+                String friendID =
+                        cursor.getString(cursor.getColumnIndex("_id"));
                 String gender =
-                        cursor.getString((cursor.getColumnIndex("gender")));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_GENDER));
                 String age =
-                        cursor.getString((cursor.getColumnIndex("age")));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_AGE));
                 String address =
-                        cursor.getString((cursor.getColumnIndex("address")));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_ADDRESS));
                 String suburb =
-                        cursor.getString((cursor.getColumnIndex("suburb")));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_SUBURB));
                 String state =
-                        cursor.getString((cursor.getColumnIndex("state")));
+                        cursor.getString(cursor.getColumnIndex(TableManager.FRIEND_COL_STATE));
             }
 
         }
@@ -208,7 +221,10 @@ public class DatabaseManager {
 
     public CursorAdapter retrieveTodo(Context context) {
         ArrayList<String> todoRows = new ArrayList<String>();
-        String[] columns = new String[]{TableManager.TODO_COL_NAME, TableManager.TODO_COL_LOCATION, TableManager.TODO_COL_COMPLETE,
+        String[] columns = new String[]{
+                TableManager.TODO_COL_NAME,
+                TableManager.TODO_COL_LOCATION,
+                TableManager.TODO_COL_COMPLETE,
                 "ROWID AS _id"};
         Cursor cursor = db.query(TableManager.TB_TODO, columns, null, null, null, null, null);
         cursor.moveToFirst();
@@ -240,11 +256,15 @@ public class DatabaseManager {
     }
 
     public CursorAdapter retrieveTodo(Context context, int complete) {
-         ArrayList<String> todoRows = new ArrayList<String>();
+        ArrayList<String> todoRows = new ArrayList<String>();
 
-        String[] columns = new String[]{TableManager.TODO_COL_NAME, TableManager.TODO_COL_LOCATION, TableManager.TODO_COL_COMPLETE,
+        String[] columns = new String[]{
+                TableManager.TODO_COL_NAME,
+                TableManager.TODO_COL_LOCATION,
+                TableManager.TODO_COL_COMPLETE,
                 "ROWID AS _id"};
-        Cursor cursor = db.query(TableManager.TB_TODO, columns,TableManager.TODO_COL_COMPLETE + " = " + complete, null, null, null, null);
+        Cursor cursor = db.query
+                (TableManager.TB_TODO, columns, TableManager.TODO_COL_COMPLETE + " = " + complete, null, null, null, null);
         cursor.moveToFirst();
 
         class TodoCursorAdapter extends ResourceCursorAdapter {
@@ -277,9 +297,23 @@ public class DatabaseManager {
         if (complete == 0) { //0 is equal false
             toggle.put(TableManager.TODO_COL_COMPLETE, 1);
         } else {
-            toggle.put(TableManager.TODO_COL_COMPLETE,0 );
+            toggle.put(TableManager.TODO_COL_COMPLETE, 0);
         }
-        db.update(TableManager.TB_TODO,toggle, "rowid =" +idRow,null);
+        db.update(TableManager.TB_TODO, toggle, "rowid =" + idRow, null);
+    }
+
+    public void updateFriend(String idRow, String fName, String lName, String gender, int age, String address, String suburb, String state) {
+        ContentValues update = new ContentValues();
+
+        update.put(TableManager.FRIEND_COL_FNAME,fName);
+        update.put(TableManager.FRIEND_COL_LNAME,lName);
+        update.put(TableManager.FRIEND_COL_GENDER,gender);
+        update.put(TableManager.FRIEND_COL_AGE,age);
+        update.put(TableManager.FRIEND_COL_ADDRESS,address);
+        update.put(TableManager.FRIEND_COL_SUBURB,suburb);
+        update.put(TableManager.FRIEND_COL_STATE,state);
+
+        db.update(TableManager.TB_FRIENDS, update, "rowid =" + idRow, null);
     }
 
     public void deleteFriend(String idRow) {

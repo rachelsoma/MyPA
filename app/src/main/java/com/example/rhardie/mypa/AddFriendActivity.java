@@ -48,7 +48,7 @@ public class AddFriendActivity extends AppCompatActivity {
     public boolean insertRec(View view) {
 
         EditText fnameIn = (EditText) this.findViewById(R.id.tvFullName);
-        EditText lnameIn = (EditText) this.findViewById(R.id.lName);
+        EditText lnameIn = (EditText) this.findViewById(R.id.etLastName);
         EditText ageIn = (EditText) this.findViewById(R.id.tvAge);
         Spinner genderIn = (Spinner) this.findViewById(R.id.tvGender);
         EditText addressIn = (EditText) this.findViewById(R.id.tvAddress);
