@@ -47,7 +47,7 @@ public class MainFriendActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) lv.getItemAtPosition(position);
                 Intent intentFriend = new Intent(MainFriendActivity.this, ViewFriendActivity.class);
-
+//todo use static vars in TableManager
                 cursor.getString((cursor.getColumnIndex("gender")));
                 String firstName = cursor.getString(cursor.getColumnIndex("firstName"));
                 String lastName = cursor.getString(cursor.getColumnIndex("lastName"));
