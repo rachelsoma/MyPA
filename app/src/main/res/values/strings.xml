@@ -26,6 +26,7 @@
     </string-array>
     <string name="title_activity_add_event">AddEventActivity</string>
     <string name="title_activity_view_friend">ViewFriendActivity</string>
+    <string name="title_activity_edit_friend">EditFriendActivity</string>
 
 
 </resources>

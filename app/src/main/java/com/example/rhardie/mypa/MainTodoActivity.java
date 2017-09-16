@@ -49,6 +49,8 @@ public class MainTodoActivity extends BaseActivity {
                 int complete =
                         cursor.getInt(cursor.getColumnIndex(TableManager.TODO_COL_COMPLETE));
                 db.toggleTodo(cursor.getLong(cursor.getColumnIndex("_id")), complete);
+                Intent intent = new Intent(MainTodoActivity.this, MainTodoActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -59,6 +61,8 @@ public class MainTodoActivity extends BaseActivity {
                 int complete =
                         cursor.getInt(cursor.getColumnIndex(TableManager.TODO_COL_COMPLETE));
                 db.toggleTodo(cursor.getLong(cursor.getColumnIndex("_id")), complete);
+                Intent intent = new Intent(MainTodoActivity.this, MainTodoActivity.class);
+                startActivity(intent);
             }
         });
     }

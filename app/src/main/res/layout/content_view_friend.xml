@@ -11,7 +11,7 @@
     tools:layout_editor_absoluteX="0dp">
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="151dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
@@ -23,7 +23,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         android:id="@+id/frameLayout"
-        app:layout_constraintHorizontal_bias="0.0">
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
         <ImageView
             android:id="@+id/friendPic"
@@ -44,7 +46,6 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="-67dp"
         android:ems="10"
         android:text="Name"
         android:textAlignment="center"
@@ -53,14 +54,13 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvGender"
         android:layout_width="233dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="34dp"
         android:text="gender"
@@ -74,7 +74,7 @@
         android:id="@+id/tvAge"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:maxLength="3"
@@ -90,9 +90,8 @@
         android:id="@+id/tvAddress"
         android:layout_width="344dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="-4dp"
         android:text="Address"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorPrimaryDark"
@@ -104,7 +103,7 @@
         android:id="@+id/tvSuburb"
         android:layout_width="232dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Suburb"
@@ -119,7 +118,7 @@
         android:id="@+id/tvState"
         android:layout_width="104dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/states"

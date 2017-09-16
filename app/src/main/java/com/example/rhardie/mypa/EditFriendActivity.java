@@ -51,8 +51,8 @@ public class EditFriendActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateFriend(view, rowId);
-                Intent intent = new Intent(EditFriendActivity.this, MainFriendActivity.class);
+                updateFriend(view, friendPosition);
+                Intent intent = new Intent(EditFriendActivity.this, ViewFriendActivity.class);
                 startActivity(intent);
             }
         });
@@ -60,7 +60,7 @@ public class EditFriendActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditFriendActivity.this, MainFriendActivity.class);
+                Intent intent = new Intent(EditFriendActivity.this, ViewFriendActivity.class);
                 startActivity(intent);
             }
         });
@@ -112,7 +112,7 @@ public class EditFriendActivity extends AppCompatActivity {
     }
 
 
-    public boolean  updateFriend(View view, String rowId) {
+    public boolean  updateFriend(View view, long friendPosition) {
 
         EditText fnameIn = (EditText) this.findViewById(R.id.etFirstName);
         EditText lnameIn = (EditText) this.findViewById(R.id.etLastName);
@@ -130,10 +130,11 @@ public class EditFriendActivity extends AppCompatActivity {
         String address = addressIn.getText().toString();
         String suburb = suburbIn.getText().toString();
         String state = stateIn.getSelectedItem().toString();
+        long id = friendPosition;
         //todo: Validate data before adding to database
-        db.updateFriend(rowId,fname, lname, gender, age, address, suburb, state);
+        db.updateFriend(id,fname, lname, gender, age, address, suburb, state);
 
-        Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Friend edited", Toast.LENGTH_SHORT).show();
 
         //response.setText();
         //productRes.setText("");

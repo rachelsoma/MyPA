@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.rhardie.mypa.AddFriendActivity"
-
-    tools:showIn="@layout/activity_add_friend"
+    tools:context="com.example.rhardie.mypa.EditFriendActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
+
     <Button
-        android:id="@+id/saveNewFriend"
+        android:id="@+id/saveEditFriend"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +25,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:id="@+id/cancelNewFriend"
+        android:id="@+id/cancelEditFriend"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +39,7 @@
         android:layout_marginBottom="32dp" />
 
     <EditText
-        android:id="@+id/tvFullName"
+        android:id="@+id/etFirstName"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -49,6 +48,7 @@
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
+        android:text="fname"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,17 +56,18 @@
         android:id="@+id/etLastName"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="86dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-2dp"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/tvFullName"
-        android:layout_marginLeft="8dp"
+        android:text="lname"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
 
     <Spinner
-        android:id="@+id/tvGender"
+        android:id="@+id/etGender"
         android:layout_width="345dp"
         android:layout_height="33dp"
         android:layout_marginLeft="8dp"
@@ -78,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etLastName" />
 
     <EditText
-        android:id="@+id/tvAge"
+        android:id="@+id/etAge"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -88,11 +89,12 @@
         android:hint="age"
         android:inputType="number"
         android:maxLength="3"
+        android:text="age"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGender" />
+        app:layout_constraintTop_toBottomOf="@+id/etGender" />
 
     <EditText
-        android:id="@+id/tvAddress"
+        android:id="@+id/etAddress"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -101,21 +103,23 @@
         android:ems="10"
         android:hint="Street Address"
         android:inputType="textPostalAddress"
+        android:text="addr"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAge" />
+        app:layout_constraintTop_toBottomOf="@+id/etAge" />
 
     <EditText
-        android:id="@+id/tvSuburb"
+        android:id="@+id/etSuburb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Suburb"
         android:inputType="textPostalAddress"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddress"
-        android:layout_marginLeft="8dp"
+        android:text="sub"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -126,13 +130,13 @@
         android:tint="@android:color/black"
         app:srcCompat="@android:drawable/ic_menu_upload"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSuburb"
+        app:layout_constraintTop_toBottomOf="@+id/etSuburb"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/texetiew"
         android:layout_width="136dp"
         android:layout_height="wrap_content"
         android:text="Upload Image"
@@ -142,22 +146,23 @@
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="18dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSuburb" />
+        app:layout_constraintTop_toBottomOf="@+id/etSuburb" />
 
     <Spinner
-        android:id="@+id/stateSpinner"
+        android:id="@+id/etState"
         android:layout_width="117dp"
         android:layout_height="41dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintLeft_toRightOf="@+id/tvSuburb"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddress"
-        android:entries="@array/states"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10" />
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:entries="@array/states"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintLeft_toRightOf="@+id/etSuburb"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+
 
 </android.support.constraint.ConstraintLayout>

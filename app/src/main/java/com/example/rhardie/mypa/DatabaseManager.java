@@ -24,7 +24,7 @@ public class DatabaseManager {
 
     //create database
     public static final String DB_NAME = "DB_Assignment1";
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 5;
 
 
     public SQLiteDatabase db;
@@ -302,7 +302,7 @@ public class DatabaseManager {
         db.update(TableManager.TB_TODO, toggle, "rowid =" + idRow, null);
     }
 
-    public void updateFriend(String idRow, String fName, String lName, String gender, int age, String address, String suburb, String state) {
+    public void updateFriend(long idRow, String fName, String lName, String gender, int age, String address, String suburb, String state) {
         ContentValues update = new ContentValues();
 
         update.put(TableManager.FRIEND_COL_FNAME,fName);
