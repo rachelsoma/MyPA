@@ -63,6 +63,8 @@ public class MainFriendActivity extends BaseActivity {
                         cursor.getString((cursor.getColumnIndex("suburb")));
                 String friendState =
                         cursor.getString((cursor.getColumnIndex("state")));
+                int statePosition =
+                        cursor.getInt(cursor.getColumnIndex("state"));
 
                 intentFriend.putExtra("friendPosition", (cursor.getLong(cursor.getColumnIndex("_id"))));
                 intentFriend.putExtra("extraName", friendName);
@@ -73,6 +75,9 @@ public class MainFriendActivity extends BaseActivity {
                 intentFriend.putExtra("address", friendAddress);
                 intentFriend.putExtra("suburb", friendSuburb);
                 intentFriend.putExtra("state", friendState);
+                intentFriend.putExtra("statePosition",statePosition);
+
+
                 startActivity(intentFriend);
             }
         });
